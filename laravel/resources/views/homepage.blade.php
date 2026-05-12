@@ -1,0 +1,278 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="csrf-token" content="{{ csrf_token() }}">
+  <title>Nearify — Home</title>
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600;700;800&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="{{ asset('css/homepage.css') }}">
+  <link rel="shortcut icon" href="{{ asset('assets/image/Logo.png') }}" type="image/x-icon">
+</head>
+<body>
+
+<button class="hamburger" id="hamburgerBtn" aria-label="Buka menu" aria-expanded="false">
+  <span></span>
+  <span></span>
+  <span></span>
+</button>
+
+<div class="sidebar-overlay" id="sidebarOverlay"></div>
+<aside class="sidebar" id="sidebar">
+  <figure class="logo">
+    <img src="{{ asset('assets/image/Logo.png') }}" alt="Logo Nearify" height="80">
+  </figure>
+
+  <nav aria-label="Menu utama">
+    <a href="{{ url('homepage') }}" class="active" aria-current="page">🏠 Home</a>
+    <a href="#">🍔 Makanan</a>
+    <a href="#">🫧 Laundry</a>
+    <a href="#">💳 Top Up</a>
+    <a href="#">👤 Profile</a>
+  </nav>
+
+  <hr class="divider">
+
+  <div class="saldo">
+    <p>Saldo</p>
+    <strong>💰 Rp <span id="saldoAmount">100.000</span></strong>
+  </div>
+
+  <hr class="divider">
+
+  <aside class="topup-box" aria-label="Top up via Indomaret">
+    <p>Top Up di</p>
+    <div class="brand">Indomaret <em>indomaret</em></div>
+    <button id="pay-button">Top Up Sekarang</button>
+  </aside>
+</aside>
+
+<main>
+
+  <header class="topbar">
+    <div>
+      <h1>Hai, Fikar!</h1>
+      <p>Selamat datang kembali di Nearify</p>
+    </div>
+
+    <search class="search">
+      <span aria-hidden="true">🔍</span>
+      <input
+        type="search"
+        id="searchInput"
+        placeholder="Cari makanan atau laundry..."
+        aria-label="Cari makanan atau laundry"
+      >
+    </search>
+
+    <div class="topbar-right">
+      <button class="icon-btn" aria-label="Notifikasi" id="notifBtn">🔔</button>
+      <button class="avatar" aria-label="Profil pengguna" onclick="window.location.href='{{ url('login') }}'">F</button>
+    </div>
+  </header>
+
+
+  <section class="hero" aria-label="Banner utama">
+    <div>
+      <h2>Mau Cari Makan?<br>Atau Laundry?</h2>
+      <button onclick="document.getElementById('searchInput').focus()">Cari Sekarang</button>
+    </div>
+    <span aria-hidden="true">📱</span>
+  </section>
+
+  <section class="cats" aria-label="Kategori layanan">
+    <article class="cat" role="button" tabindex="0" aria-label="Layanan Makanan">
+      <div class="cat-icon food" aria-hidden="true">🍔</div>
+      <div>
+        <h3>Makanan</h3>
+        <p>Cari makanan favoritemu</p>
+      </div>
+      <span class="arrow" aria-hidden="true">›</span>
+    </article>
+    <article class="cat" role="button" tabindex="0" aria-label="Layanan Laundry">
+      <div class="cat-icon laundry" aria-hidden="true">🫧</div>
+      <div>
+        <h3>Laundry</h3>
+        <p>Temukan laundry terdekat</p>
+      </div>
+      <span class="arrow" aria-hidden="true">›</span>
+    </article>
+  </section>
+
+  <section class="promos" aria-label="Promo tersedia">
+    <strong>Promo Lainnya!</strong>
+    <article class="promo blue">
+      <span aria-hidden="true">🫧</span>
+      <div><small>DISKON LAUNDRY</small><b>20%</b></div>
+    </article>
+    <article class="promo pink">
+      <span aria-hidden="true">👛</span>
+      <div><small>CASHBACK SALDO</small><b>s/d Rp10.000</b></div>
+    </article>
+    <article class="promo gold">
+      <span aria-hidden="true">🍜</span>
+      <div><small>VOUCHER MAKANAN</small><b>s/d 25%</b></div>
+    </article>
+    <a href="#">Lihat semua ›</a>
+  </section>
+
+  <div class="grid">
+    <section class="section" aria-label="Makanan terdekat">
+      <h3>Makanan Terdekat</h3>
+      <div class="cards" role="list">
+        <article class="card" role="listitem">
+          <div class="thumb" style="background:#1e2a45" aria-hidden="true">🍜</div>
+          <b>Mie Gacoan</b>
+          <small>Purwokerto</small>
+          <div class="meta"><span>📍 5,4 km</span><em>⭐ 4.7</em></div>
+        </article>
+        <article class="card" role="listitem">
+          <div class="thumb" style="background:#1a1a2e" aria-hidden="true">🍗</div>
+          <b>Rocket Chicken</b>
+          <small>Kolonel Sugiri</small>
+          <div class="meta"><span>📍 1,2 km</span><em>⭐ 4.7</em></div>
+        </article>
+        <article class="card" role="listitem">
+          <div class="thumb" style="background:#2a1a10" aria-hidden="true">🍽️</div>
+          <b>Waroenk Ora Umum</b>
+          <small>Purwokerto</small>
+          <div class="meta"><span>📍 4,6 km</span><em>⭐ 4.0</em></div>
+        </article>
+      </div>
+    </section>
+
+    <section class="section" aria-label="Laundry termurah">
+      <h3>Laundry Termurah</h3>
+      <div class="cards" role="list">
+        <article class="card" role="listitem">
+          <div class="thumb" style="background:#1c2a1c" aria-hidden="true">🫧</div>
+          <b>Laundry 57 Unsoed</b>
+          <small>Jl. Cendrawasih</small>
+          <div class="meta"><span>📍 0,6 km</span><em>⭐ 5.0</em></div>
+        </article>
+        <article class="card" role="listitem">
+          <div class="thumb" style="background:#1a2a20" aria-hidden="true">🧺</div>
+          <b>Maxi Laundry</b>
+          <small>Jl. Dr. Angka</small>
+          <div class="meta"><span>📍 0,4 km</span><em>⭐ 4.3</em></div>
+        </article>
+        <article class="card" role="listitem">
+          <div class="thumb" style="background:#1e1e2e" aria-hidden="true">✨</div>
+          <b>Crystal Laundry</b>
+          <small>Jl. Overste Isdiman</small>
+          <div class="meta"><span>📍 0,6 km</span><em>⭐ 4.5</em></div>
+        </article>
+      </div>
+    </section>
+  </div>
+</main>
+
+<script>
+  const hamburgerBtn = document.getElementById('hamburgerBtn');
+  const sidebar = document.getElementById('sidebar');
+  const overlay = document.getElementById('sidebarOverlay');
+
+  function openSidebar() {
+    sidebar.classList.add('open');
+    overlay.classList.add('active');
+    hamburgerBtn.setAttribute('aria-expanded', 'true');
+    document.body.style.overflow = 'hidden';
+  }
+
+  function closeSidebar() {
+    sidebar.classList.remove('open');
+    overlay.classList.remove('active');
+    hamburgerBtn.setAttribute('aria-expanded', 'false');
+    document.body.style.overflow = '';
+  }
+
+  hamburgerBtn.addEventListener('click', () => {
+    sidebar.classList.contains('open') ? closeSidebar() : openSidebar();
+  });
+
+  overlay.addEventListener('click', closeSidebar);
+
+  window.addEventListener('resize', () => {
+    if (window.innerWidth > 1024) closeSidebar();
+  });
+
+  const notifBtn = document.getElementById('notifBtn');
+  notifBtn.addEventListener('click', () => {
+    notifBtn.classList.add('shake');
+    setTimeout(() => notifBtn.classList.remove('shake'), 500);
+    alert('Tidak ada notifikasi baru.');
+  });
+
+
+  const searchInput = document.getElementById('searchInput');
+  searchInput.addEventListener('input', () => {
+    const q = searchInput.value.toLowerCase();
+    document.querySelectorAll('.card').forEach(card => {
+      const name = card.querySelector('b')?.textContent.toLowerCase() || '';
+      card.style.display = name.includes(q) || q === '' ? '' : 'none';
+    });
+  });
+
+  document.querySelectorAll('.cat').forEach(cat => {
+    cat.addEventListener('keydown', (e) => {
+      if (e.key === 'Enter' || e.key === ' ') cat.click();
+    });
+  });
+
+  // Karena ini route Laravel, kita cocokkan berdasarkan pathname
+  const currentUrl = window.location.href;
+  document.querySelectorAll('nav a').forEach(link => {
+    link.classList.remove('active');
+    if (link.href === currentUrl) {
+      link.classList.add('active');
+      link.setAttribute('aria-current', 'page');
+    }
+  });
+
+  const payButton = document.getElementById('pay-button');
+  if(payButton) {
+    payButton.addEventListener('click', async function () {
+      try {
+        const response = await fetch('{{ url("/topup/token") }}', {
+          method: 'POST',
+          headers: {
+            'Content-Type': 'application/json',
+            'X-CSRF-TOKEN': document.querySelector('meta[name="csrf-token"]').getAttribute('content')
+          },
+          body: JSON.stringify({
+            amount: 50000 // Nominal topup default 50.000
+          })
+        });
+        const data = await response.json();
+        
+        if (data.snap_token) {
+          window.snap.pay(data.snap_token, {
+            onSuccess: function(result){
+              alert("Top up berhasil!"); 
+              console.log(result);
+            },
+            onPending: function(result){
+              alert("Menunggu pembayaran!"); 
+              console.log(result);
+            },
+            onError: function(result){
+              alert("Top up gagal!"); 
+              console.log(result);
+            },
+            onClose: function(){
+              alert('Anda menutup popup sebelum menyelesaikan pembayaran');
+            }
+          });
+        } else {
+          alert('Gagal mendapatkan token transaksi: ' + (data.error || 'Unknown error'));
+        }
+      } catch (error) {
+        console.error('Error:', error);
+        alert('Terjadi kesalahan saat memproses pembayaran.');
+      }
+    });
+  }
+</script>
+<script src="https://app.sandbox.midtrans.com/snap/snap.js" data-client-key="{{ config('midtrans.client_key') }}"></script>
+</body>
+</html>
