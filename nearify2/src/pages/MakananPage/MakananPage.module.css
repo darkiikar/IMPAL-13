@@ -1,0 +1,87 @@
+.layout { display: flex; min-height: 100vh; background: var(--bg-primary); }
+.main { margin-left: var(--sidebar-w); flex: 1; padding: 26px 28px; min-width: 0; }
+
+.pageHeader { margin-bottom: 24px; }
+.pageHeader h1 { font-size: 22px; font-weight: 700; margin-bottom: 4px; }
+.pageHeader p  { font-size: 13px; color: var(--text-muted); }
+
+.warungGrid { display: grid; grid-template-columns: repeat(auto-fill, minmax(300px, 1fr)); gap: 14px; }
+
+.warungCard {
+  background: var(--bg-secondary); border: 1px solid var(--border);
+  border-radius: var(--radius-md); padding: 16px;
+  display: flex; align-items: center; gap: 14px;
+  cursor: pointer; position: relative;
+  transition: border-color var(--transition), transform var(--transition);
+}
+.warungCard:hover { border-color: rgba(0,180,216,0.4); transform: translateY(-2px); }
+.warungClosed { opacity: 0.5; cursor: not-allowed; }
+.warungClosed:hover { transform: none; border-color: var(--border); }
+
+.warungThumb { width: 60px; height: 60px; border-radius: 12px; display: flex; align-items: center; justify-content: center; font-size: 28px; flex-shrink: 0; }
+.warungInfo { flex: 1; min-width: 0; }
+.warungInfo h3 { font-size: 14px; font-weight: 700; margin-bottom: 3px; }
+.category { font-size: 11px; color: var(--accent); margin-bottom: 3px; }
+.address  { font-size: 11px; color: var(--text-muted); margin-bottom: 6px; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+.warungMeta { display: flex; justify-content: space-between; }
+.warungMeta span { font-size: 11px; color: var(--text-muted); }
+.open   { color: #4caf50 !important; font-weight: 600; }
+.closed { color: #f44336 !important; font-weight: 600; }
+.chevron { color: var(--accent); font-size: 20px; flex-shrink: 0; }
+
+.empty { display: flex; flex-direction: column; align-items: center; gap: 12px; padding: 60px; color: var(--text-muted); }
+.empty span { font-size: 48px; }
+
+/* ── MODAL ── */
+.overlay { position: fixed; inset: 0; background: rgba(0,0,0,0.65); display: flex; align-items: center; justify-content: center; z-index: 500; padding: 1rem; backdrop-filter: blur(2px); }
+.modal { background: #161e30; border: 1px solid var(--border); border-radius: var(--radius-lg); width: 100%; max-width: 480px; max-height: 90vh; display: flex; flex-direction: column; overflow: hidden; }
+
+.modalHeader { display: flex; align-items: flex-start; justify-content: space-between; padding: 20px 20px 16px; border-bottom: 1px solid var(--border); }
+.modalHeader h2 { font-size: 17px; font-weight: 700; margin-bottom: 3px; }
+.modalHeader p  { font-size: 11px; color: var(--text-muted); }
+.closeBtn { background: rgba(255,255,255,0.06); border: none; color: var(--text-muted); width: 28px; height: 28px; border-radius: 50%; font-size: 12px; cursor: pointer; display: flex; align-items: center; justify-content: center; flex-shrink: 0; transition: background var(--transition); }
+.closeBtn:hover { background: rgba(255,80,80,0.2); color: #ff6b6b; }
+
+.menuList { flex: 1; overflow-y: auto; padding: 12px 20px; display: flex; flex-direction: column; gap: 8px; }
+.menuItem { display: flex; align-items: center; gap: 12px; background: var(--bg-secondary); border-radius: 10px; padding: 12px; }
+.menuEmoji { font-size: 24px; flex-shrink: 0; }
+.menuInfo { flex: 1; }
+.menuInfo b { display: block; font-size: 13px; margin-bottom: 3px; }
+.menuInfo span { font-size: 12px; color: var(--accent); font-weight: 600; }
+
+.qtyControl { display: flex; align-items: center; gap: 8px; }
+.qtyControl button { width: 28px; height: 28px; border-radius: 50%; border: none; background: var(--accent); color: #fff; font-size: 16px; font-weight: 700; cursor: pointer; display: flex; align-items: center; justify-content: center; transition: background var(--transition); }
+.qtyControl button:hover { background: var(--accent-hover); }
+.qtyControl span { font-size: 14px; font-weight: 600; min-width: 20px; text-align: center; }
+.addBtn { width: auto !important; border-radius: 8px !important; padding: 0 10px; font-size: 12px !important; white-space: nowrap; }
+
+.modalFooter { padding: 14px 20px; border-top: 1px solid var(--border); display: flex; align-items: center; gap: 14px; }
+.totalInfo { flex: 1; }
+.totalInfo span { display: block; font-size: 11px; color: var(--text-muted); margin-bottom: 2px; }
+.totalInfo strong { font-size: 16px; color: var(--accent); }
+.checkoutBtn { background: var(--accent); border: none; color: #fff; border-radius: 10px; padding: 11px 20px; font-size: 13px; font-weight: 600; cursor: pointer; font-family: var(--font-main); transition: background var(--transition), opacity var(--transition); white-space: nowrap; }
+.checkoutBtn:hover { background: var(--accent-hover); }
+.checkoutBtn:disabled { opacity: 0.6; cursor: not-allowed; }
+
+/* Checkout */
+.checkoutBody { padding: 16px 20px; overflow-y: auto; display: flex; flex-direction: column; gap: 12px; }
+.orderSummary { background: var(--bg-secondary); border-radius: 10px; padding: 14px; }
+.orderSummary h4 { font-size: 13px; font-weight: 700; margin-bottom: 10px; color: var(--accent); }
+.summaryRow { display: flex; justify-content: space-between; font-size: 12px; color: var(--text-muted); margin-bottom: 6px; }
+.totalRow { border-top: 1px solid var(--border); padding-top: 8px; margin-top: 4px; }
+.totalRow strong { color: var(--text-primary); font-size: 14px; }
+.fieldLabel { font-size: 12px; color: var(--text-muted); }
+.textarea { width: 100%; background: var(--bg-secondary); border: 1px solid var(--border); border-radius: 8px; padding: 10px; color: var(--text-primary); font-size: 13px; font-family: var(--font-main); resize: none; outline: none; transition: border-color var(--transition); }
+.textarea:focus { border-color: var(--accent); }
+.saldoInfo { background: rgba(0,180,216,0.08); border: 1px solid rgba(0,180,216,0.2); border-radius: 8px; padding: 10px 14px; display: flex; justify-content: space-between; font-size: 12px; }
+.saldoInfo strong { color: var(--accent); }
+.errorMsg { color: var(--error); font-size: 12px; text-align: center; }
+
+/* Success */
+.successModal { align-items: center; text-align: center; padding: 40px 24px; gap: 14px; }
+.successIcon { font-size: 60px; }
+.successModal h2 { font-size: 20px; font-weight: 700; }
+.successModal p { font-size: 13px; color: var(--text-muted); line-height: 1.6; }
+
+@media (max-width: 1024px) { .main { margin-left: 0; padding: 20px 18px; padding-bottom: 80px; } }
+@media (max-width: 480px) { .main { padding: 14px 12px; padding-bottom: 76px; } .warungGrid { grid-template-columns: 1fr; } }
