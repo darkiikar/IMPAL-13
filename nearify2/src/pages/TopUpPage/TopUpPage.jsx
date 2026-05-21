@@ -16,6 +16,31 @@ const PAYMENT_METHODS = [
   { id: 'mandiri', label: 'Mandiri',       icon: '🏦', desc: 'Virtual account Mandiri' },
 ]
 
+const MIDTRANS_CLIENT_KEY = import.meta.env.VITE_MIDTRANS_CLIENT_KEY || 'Mid-client-voyENYN0S5LmF90L'
+const MIDTRANS_SCRIPT = 'https://app.sandbox.midtrans.com/snap/snap.js'
+
+function loadMidtransSnap() {
+  if (typeof window === 'undefined') return Promise.reject(new Error('Browser environment required'))
+  if (window.snap) return Promise.resolve()
+
+  return new Promise((resolve, reject) => {
+    const existing = document.querySelector(`script[src="${MIDTRANS_SCRIPT}"]`)
+    if (existing) {
+      existing.addEventListener('load', () => resolve())
+      existing.addEventListener('error', () => reject(new Error('Gagal memuat Midtrans Snap')))
+      return
+    }
+
+    const script = document.createElement('script')
+    script.src = MIDTRANS_SCRIPT
+    script.setAttribute('data-client-key', MIDTRANS_CLIENT_KEY)
+    script.async = true
+    script.onload = () => resolve()
+    script.onerror = () => reject(new Error('Gagal memuat Midtrans Snap'))
+    document.body.appendChild(script)
+  })
+}
+
 export default function TopUpPage() {
   const { user, updateSaldo } = useAuth()
   const [nominal, setNominal] = useState(null)
@@ -44,10 +69,45 @@ export default function TopUpPage() {
 
   const handlePay = async () => {
     setStep('processing')
-    // ── Ganti dengan Midtrans Snap di production ──
-    await new Promise(r => setTimeout(r, 1500))
-    updateSaldo(amount)
-    setStep('success')
+    setError('')
+
+    try {
+      const response = await fetch('/topup/token', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ amount }),
+      })
+      const data = await response.json()
+
+      if (!response.ok || !data.snap_token) {
+        throw new Error(data.error || 'Gagal mengambil token Midtrans')
+      }
+
+      await loadMidtransSnap()
+
+      window.snap.pay(data.snap_token, {
+        onSuccess: () => {
+          updateSaldo(amount)
+          setStep('success')
+        },
+        onPending: () => {
+          updateSaldo(amount)
+          setStep('success')
+        },
+        onError: () => {
+          setError('Pembayaran gagal. Silakan coba lagi.')
+          setStep('confirm')
+        },
+        onClose: () => {
+          setError('Pembayaran dibatalkan.')
+          setStep('confirm')
+        },
+      })
+    } catch (err) {
+      console.error(err)
+      setError(err.message || 'Terjadi kesalahan saat memproses pembayaran.')
+      setStep('confirm')
+    }
   }
 
   const handleReset = () => {
