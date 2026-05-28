@@ -10,6 +10,7 @@ import LaundryPage from './pages/LaundryPage/LaundryPage.jsx'
 import TopUpPage   from './pages/TopUpPage/TopUpPage.jsx'
 import ProfilePage from './pages/ProfilePage/ProfilePage.jsx'
 import AdminPage   from './pages/AdminPage/AdminPage.jsx'
+import AuthCallback from './pages/AuthCallback.jsx'
 
 function PrivateRoute({ children }) {
   const { user } = useAuth()
@@ -42,8 +43,9 @@ function AppRoutes() {
       <Route path="/laundry" element={<PrivateRoute><LaundryPage /></PrivateRoute>} />
       <Route path="/topup"   element={<PrivateRoute><TopUpPage /></PrivateRoute>} />
       <Route path="/profile" element={<PrivateRoute><ProfilePage /></PrivateRoute>} />
-      <Route path="/admin"   element={<AdminRoute><AdminPage /></AdminRoute>} />
-      <Route path="*"        element={<Navigate to="/" replace />} />
+      <Route path="/admin"         element={<AdminRoute><AdminPage /></AdminRoute>} />
+      <Route path="/auth/callback" element={<AuthCallback />} />
+      <Route path="*"              element={<Navigate to="/" replace />} />
     </Routes>
   )
 }

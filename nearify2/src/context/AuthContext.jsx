@@ -1,5 +1,7 @@
 import { createContext, useContext, useState } from 'react'
 
+const API_BASE = 'http://localhost:8000'
+
 const AuthContext = createContext(null)
 
 // ── storage helpers dengan error handling ──
@@ -15,6 +17,7 @@ const safeRemove = (key) => {
 
 export function AuthProvider({ children }) {
   const [user,   setUser]   = useState(() => safeGet('nearify_user'))
+  const [token,  setToken]  = useState(() => localStorage.getItem('nearify_token'))
   const [orders, setOrders] = useState(() => safeGet('nearify_orders') ?? [])
 
   const login = (userData, remember = false) => {
@@ -32,9 +35,45 @@ export function AuthProvider({ children }) {
     else safeRemove('nearify_user') // session only
   }
 
-  const logout = () => {
+  // Login via Google — simpan token Sanctum lalu fetch /api/me
+  const loginWithToken = async (sanctumToken) => {
+    try {
+      const res = await fetch(`${API_BASE}/api/me`, {
+        headers: { Authorization: `Bearer ${sanctumToken}` },
+      })
+      if (!res.ok) return null
+      const userData = await res.json()
+      const userObj = {
+        id:     userData.id,
+        name:   userData.name,
+        email:  userData.email,
+        avatar: userData.avatar ?? null,
+        saldo:  typeof userData.saldo === 'number' ? userData.saldo : 0,
+        role:   userData.role ?? 'user',
+      }
+      localStorage.setItem('nearify_token', sanctumToken)
+      setToken(sanctumToken)
+      setUser(userObj)
+      safeSet('nearify_user', userObj)
+      return userObj
+    } catch {
+      return null
+    }
+  }
+
+  const logout = async () => {
+    if (token) {
+      try {
+        await fetch(`${API_BASE}/api/logout`, {
+          method: 'POST',
+          headers: { Authorization: `Bearer ${token}` },
+        })
+      } catch { /* ignore */ }
+    }
     setUser(null)
+    setToken(null)
     safeRemove('nearify_user')
+    localStorage.removeItem('nearify_token')
   }
 
   const updateUser = (data) => {
@@ -106,8 +145,8 @@ export function AuthProvider({ children }) {
 
   return (
     <AuthContext.Provider value={{
-      user, orders, userOrders,
-      login, logout, updateUser, updateSaldo, addOrder, updateOrderStatus,
+      user, token, orders, userOrders,
+      login, loginWithToken, logout, updateUser, updateSaldo, addOrder, updateOrderStatus,
     }}>
       {children}
     </AuthContext.Provider>

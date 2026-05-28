@@ -16,7 +16,7 @@ const PAYMENT_METHODS = [
   { id: 'mandiri', label: 'Mandiri',       icon: '🏦', desc: 'Virtual account Mandiri' },
 ]
 
-const MIDTRANS_CLIENT_KEY = import.meta.env.VITE_MIDTRANS_CLIENT_KEY || 'Mid-client-voyENYN0S5LmF90L'
+const MIDTRANS_CLIENT_KEY = import.meta.env.VITE_MIDTRANS_CLIENT_KEY || 'Mid-client-exx9AiWQaokZbYyv'
 const MIDTRANS_SCRIPT = 'https://app.sandbox.midtrans.com/snap/snap.js'
 
 function loadMidtransSnap() {
@@ -72,15 +72,22 @@ export default function TopUpPage() {
     setError('')
 
     try {
-      const response = await fetch('/topup/token', {
+      // Ambil token dari localStorage (disimpan saat login via Google)
+      const authToken = localStorage.getItem('nearify_token')
+
+      const response = await fetch('/api/topup/token', {
         method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
+        headers: {
+          'Content-Type': 'application/json',
+          'Accept': 'application/json',
+          ...(authToken ? { 'Authorization': `Bearer ${authToken}` } : {}),
+        },
         body: JSON.stringify({ amount }),
       })
       const data = await response.json()
 
       if (!response.ok || !data.snap_token) {
-        throw new Error(data.error || 'Gagal mengambil token Midtrans')
+        throw new Error(data.error || data.message || 'Gagal mengambil token Midtrans')
       }
 
       await loadMidtransSnap()

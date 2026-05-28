@@ -1,6 +1,7 @@
 <?php
 
 use Illuminate\Support\Facades\Route;
+use App\Http\Controllers\AuthController;
 
 Route::get('/', function () {
     return view('index');
@@ -18,4 +19,5 @@ Route::get('/homepage', function () {
     return view('homepage');
 });
 
-Route::post('/topup/token', [\App\Http\Controllers\TopUpController::class, 'getSnapToken']);
+Route::get('/auth/google',          [AuthController::class, 'redirectToGoogle']);
+Route::get('/auth/google/callback', [AuthController::class, 'handleGoogleCallback']);
