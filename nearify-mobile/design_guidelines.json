@@ -1,0 +1,189 @@
+{
+  "app_name": "Nearify",
+  "personality": "1 iOS-Native Clean with 6 Glass / Luxe surfaces",
+  "personality_one_liner": "A premium, student-focused super app that balances clean, light utilitarian content surfaces with luxurious navy-to-tosca glassmorphic brand moments.",
+  "color": {
+    "surface": "#F8FAFC",
+    "onSurface": "#1E293B",
+    "surfaceSecondary": "#FFFFFF",
+    "onSurfaceSecondary": "#0F172A",
+    "surfaceTertiary": "#F1F5F9",
+    "onSurfaceTertiary": "#334155",
+    "surfaceInverse": "#0F172A",
+    "onSurfaceInverse": "#FFFFFF",
+    "brand": "#00A896",
+    "brandPrimary": "#00A896",
+    "onBrandPrimary": "#FFFFFF",
+    "brandSecondary": "#0B1B3D",
+    "onBrandSecondary": "#FFFFFF",
+    "brandTertiary": "#E6F6F4",
+    "onBrandTertiary": "#007A6D",
+    "brandGradientStart": "#0B1B3D",
+    "brandGradientMiddle": "#05626A",
+    "brandGradientEnd": "#00A896",
+    "success": "#10B981",
+    "onSuccess": "#FFFFFF",
+    "warning": "#F59E0B",
+    "onWarning": "#FFFFFF",
+    "error": "#EF4444",
+    "onError": "#FFFFFF",
+    "info": "#0D9488",
+    "onInfo": "#FFFFFF",
+    "border": "#E2E8F0",
+    "borderStrong": "#CBD5E1",
+    "divider": "#F1F5F9"
+  },
+  "typography": {
+    "displayFontFamily": "Plus Jakarta Sans",
+    "textFontFamily": "Plus Jakarta Sans",
+    "scale": {
+      "sm": 12,
+      "base": 14,
+      "lg": 16,
+      "xl": 20,
+      "2xl": 24
+    }
+  },
+  "spacing": {
+    "rule": "Use 8pt grid system. Generous padding around content. Forms and lists should breathe. Stick primary actions to the bottom with safe area padding.",
+    "xs": 4,
+    "sm": 8,
+    "md": 16,
+    "lg": 24,
+    "xl": 32,
+    "2xl": 40,
+    "3xl": 48
+  },
+  "radius_tokens": {
+    "sm": 8,
+    "md": 16,
+    "lg": 24,
+    "xl": 28,
+    "pill": 999
+  },
+  "shadow_tier": "1",
+  "navigation": "bottom_tabs",
+  "icon_set": "Phosphor",
+  "glassmorphism": {
+    "enabled": "true",
+    "do's": [
+      "Use premium frosted glass for Splash screen Login/Signup pill buttons (~28px radius) over the gradient.",
+      "Apply glassmorphism to bottom sheet modals (drag handle, header, translucent panel with scrim).",
+      "Use glass effect on sticky bottom CTAs (e.g., Cart checkout button over scrolling food list).",
+      "Ensure text on glass is fully readable by adding a subtle white or dark tint layer beneath the blur."
+    ],
+    "dont's": [
+      "Do not use glass for text-heavy content areas or standard list rows.",
+      "Do not over-layer glass on top of glass; keep it to one elevation tier (e.g., just the bottom sheet)."
+    ]
+  },
+  "platform_libraries": {
+    "glass": {
+      "ios": "expo-blur",
+      "android": "expo-blur",
+      "low_end_android_fallback": "solid surfaceSecondary"
+    },
+    "image": "expo-image",
+    "blur": "expo-blur",
+    "bottom_sheet": "@gorhom/bottom-sheet",
+    "animation": "react-native-reanimated",
+    "gesture": "react-native-gesture-handler"
+  },
+  "screens": [
+    {
+      "name": "Splash",
+      "purpose": "First impression and auth entry point.",
+      "states": {
+        "loading": "Centered white stylized N logo spinning subtly.",
+        "empty": "",
+        "error": ""
+      },
+      "layout": "Full bleed vertical gradient (`brandGradientStart` to `brandGradientEnd`). Centered white logo and 'NEARIFY' wordmark + 'Tempatnya Mahasiswa'. Bottom area: Glassy translucent pill CTAs ('Login', 'Sign up') with soft shadow and ~28px radius. Version text at very bottom."
+    },
+    {
+      "name": "Home (Dashboard)",
+      "purpose": "Central hub for navigating the 5 super-app services.",
+      "states": {
+        "loading": "Skeleton grid.",
+        "empty": "",
+        "error": "Error loading dashboard data + Retry button."
+      },
+      "layout": "Top: Greeting and contextual info. Middle: A premium gradient featured card (promos/wallet). Core: 4-item service grid (Food, Laundry, Kost, Quran) as clear tappable cards with `brandTertiary` icon backgrounds. Bottom: 4-tab bar (Home, Pesanan, Al-Quran, Profil)."
+    },
+    {
+      "name": "Food Delivery",
+      "purpose": "Browse warungs, view menus, and add to cart.",
+      "states": {
+        "loading": "Skeleton list.",
+        "empty": "Illustration + 'Belum ada restoran di sekitarmu'.",
+        "error": "Failed to load restaurants + Retry."
+      },
+      "layout": "Clean `surfaceSecondary` background. Search bar at top. Horizontal scroll for categories. Vertical list of restaurant cards with large, high-quality images. Sticky glass CTA at bottom when cart has items."
+    },
+    {
+      "name": "Kost Discovery",
+      "purpose": "Find boarding houses via list or map.",
+      "states": {
+        "loading": "Map skeleton.",
+        "empty": "No kost found matching filters.",
+        "error": "Network error + Retry."
+      },
+      "layout": "Toggle between Map and List view. High-quality image carousels per kost card. Bottom sheet modal (glassmorphic) for advanced filtering."
+    },
+    {
+      "name": "Laundry",
+      "purpose": "Utility flows for scheduling pickup and delivery.",
+      "states": {
+        "loading": "Centered spinner.",
+        "empty": "No active laundry orders.",
+        "error": "Error + Retry."
+      },
+      "layout": "Forms with single-column layouts for service selection, quantity, and scheduling."
+    },
+    {
+      "name": "Al-Quran Digital",
+      "purpose": "Read surahs with Arabic and Indonesian translation.",
+      "states": {
+        "loading": "Skeleton surah list.",
+        "empty": "No bookmarks.",
+        "error": "Failed to load + Retry."
+      },
+      "layout": "Clean, distraction-free reading surface. Generous vertical rhythm. Arabic text larger and right-aligned, Indonesian translation smaller below it."
+    }
+  ],
+  "images": {
+    "splash_bg_fallback": {
+      "url": "https://images.pexels.com/photos/7972324/pexels-photo-7972324.jpeg",
+      "alt": "University students on campus, blurred background for splash if needed"
+    },
+    "food_placeholder": {
+      "url": "https://images.unsplash.com/photo-1680674814945-7945d913319c",
+      "alt": "Nasi goreng indonesian food"
+    },
+    "kost_placeholder": {
+      "url": "https://images.unsplash.com/photo-1589271243958-d61e12b61b97",
+      "alt": "Minimalist aesthetic bedroom"
+    },
+    "laundry_placeholder": {
+      "url": "https://images.unsplash.com/photo-1582735689369-4fe89db7114c",
+      "alt": "Clean folded laundry"
+    }
+  },
+  "instructions_to_main_agent": [
+    "Strictly apply the primary navy-to-tosca gradient (#0B1B3D -> #05626A -> #00A896) on the Splash screen, main app headers, and key promotional cards. Do NOT use it for text-heavy backgrounds.",
+    "Implement the 'premium glassmorphism' specifically on the Splash screen CTAs (using expo-blur with a semi-transparent white fill and ~28px radius) and bottom sheets (e.g., Kost filters).",
+    "Enforce a strict 4-tab maximum for bottom navigation: Home, Pesanan, Al-Quran, and Profil. Do not add a 5th tab.",
+    "Maintain high contrast on content screens (Food, Kost) by utilizing the light surfaces (#F8FAFC and #FFFFFF) with Tosca (#00A896) accents. Ensure text is NEVER rendered directly on images without a top-down gradient scrim.",
+    "Cap typography weights at 500 across all screens. Hierarchy should be established via size (using Plus Jakarta Sans), not heavy bolding.",
+    "For the Al-Quran feature, ensure the layout supports a distraction-free, generous vertical rhythm with Arabic aligned right and Indonesian translation below it.",
+    "Never use generic Emojis in the UI. Rely on the specified Phosphor icon set for system and utility icons.",
+    "Build the home screen as a 'dashboard'. Use a top greeting, a premium promo/wallet card, and a clear 4-item grid for the main services (Food, Laundry, Kost, Quran). Keep touch targets large."
+  ],
+  "haptics": {
+    "primary_button_press": "impactLight",
+    "tab_change": "selection",
+    "add_to_cart": "impactMedium",
+    "bottom_sheet_open": "impactLight",
+    "pull_to_refresh": "impactMedium"
+  }
+}
